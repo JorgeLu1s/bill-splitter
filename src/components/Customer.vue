@@ -8,7 +8,7 @@
     </div>
     <button @click="addProduct">Add</button>
     <br>
-    Total: {{ total }}
+    Total: {{ total | currency }}
     <br>
     <button @click="save">Save</button>
     <router-link to="/">List</router-link>

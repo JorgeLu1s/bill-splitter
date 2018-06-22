@@ -3,9 +3,9 @@
     <h1>Bourbon Calculator</h1>
     <router-link to="/new">New</router-link>
     <ul v-for="customer in customers">
-      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{customer.total}}</router-link></li>
+      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{customer.total | currency}}</router-link></li>
     </ul>
-    Total: {{ total }}
+    Total: {{ total | currency }}
   </div>
 </template>
 <script>

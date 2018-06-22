@@ -17,6 +17,7 @@
 
 <script>
 import ProductItem from '@/components/productItem'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Customer',
@@ -29,14 +30,25 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      promo: 'getPromo'
+    }),
+
     total: function () {
       var total = 0
+
       if (this.customer.products) {
         this.customer.products.forEach(product => {
           total += parseInt(product.price)
         })
       }
+
       this.customer.total = total
+
+      if (this.promo) {
+        total = total / 2
+      }
+
       return total
     }
   },

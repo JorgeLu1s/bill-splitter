@@ -1,13 +1,16 @@
 <template>
   <div>
-    <h1>Bourbon Calculator</h1>
+    <h1>Bourbon Calculator <span style="color: red" v-show="promo">2x1</span></h1>
+    <button @click="promoOff">{{buttonText}}</button>
+    <br>
     <router-link to="/new">New</router-link>
     <ul v-for="customer in customers">
-      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{customer.total | currency}}</router-link></li>
+      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{customer.total | promoFilter(promo) | currency}}</router-link></li>
     </ul>
     Total: {{ total | currency }}
   </div>
 </template>
+
 <script>
 import Customer from '@/components/Customer'
 import {mapGetters, mapActions} from 'vuex'
@@ -17,16 +20,29 @@ export default {
   components: { Customer },
   computed: {
     ...mapGetters({
-      customers: 'getCustomers'
+      customers: 'getCustomers',
+      promo: 'getPromo',
+      total: 'getTotal'
     }),
 
-    total: function () {
-      var total = 0
-      if (this.customers.length > 0) {
-        this.customers.forEach(customer => {
-          total += parseInt(customer.total)
-        })
+    buttonText: function () {
+      return this.promo === true ? 'Promo Off' : 'Promo On'
+    },
+  },
+
+  methods: {
+    ...mapActions({
+      promoOff: 'togglePromo'
+    })
+  },
+
+  filters: {
+    promoFilter: function (value, promo) {
+      var total = value
+      if (promo) {
+        total = value / 2
       }
+
       return total
     }
   }

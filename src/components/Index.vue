@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>Bourbon Calculator <span style="color: red" v-show="promo">2x1</span></h1>
-    Total: {{ total | currency }}
+    Total: {{ total | currency }} <br>
+    Tip: {{ tip | currency }} <br>
+    Total + Tip: {{ totalTip | currency }} <br>
     <br>
     <button @click="promoOff">{{buttonText}}</button>
     <br>
@@ -32,7 +34,9 @@ export default {
       customers: 'getCustomers',
       promo: 'getPromo',
       total: 'getTotal',
-      groups: 'getGroups'
+      groups: 'getGroups',
+      tip: 'getTip',
+      totalTip: 'getTotalAndTip'
     }),
 
     buttonText: function () {
@@ -63,7 +67,7 @@ export default {
         }
       })
 
-      return total
+      return total + ((total * 10)/ 100)
     }
   },
 }

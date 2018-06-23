@@ -44,6 +44,14 @@ export default new Vuex.Store({
 
       return total
     },
+
+    getTip (state, getters) {
+      return (getters.getTotal * 10) / 100
+    },
+
+    getTotalAndTip (state, getters) {
+      return getters.getTotal + getters.getTip
+    }
   },
 
   actions: {

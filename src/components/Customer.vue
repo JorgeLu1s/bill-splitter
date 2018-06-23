@@ -10,8 +10,13 @@
     <br>
     Total: {{ total | currency }}
     <br>
+    <ul>
+      <li v-for="group in groups" v-if="isInGroup(group)">
+        {{ group.name }} - {{ group.individual | currency }}
+      </li>
+    </ul>
     <button @click="save">Save</button>
-    <router-link to="/">List</router-link>
+    <router-link to="/">Cancel</router-link>
   </div>
 </template>
 
@@ -25,13 +30,15 @@ export default {
   props: ['id'],
   data () {
     return {
-      customer: {}
+      customer: {},
+      totalGroup: 0
     }
   },
 
   computed: {
     ...mapGetters({
-      promo: 'getPromo'
+      promo: 'getPromo',
+      groups: 'getGroups'
     }),
 
     total: function () {
@@ -67,6 +74,18 @@ export default {
 
     removeProduct: function (index) {
       this.customer.products.splice(index, 1)
+    },
+
+    isInGroup: function (group) {
+      if (group.customers.find(id => id === this.customer.id)) {
+        return true
+      }
+
+      return false
+    },
+
+    getTotalGroup: function (individual) {
+      this.totalGroup += individual
     }
   },
 

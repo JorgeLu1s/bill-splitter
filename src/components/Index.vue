@@ -1,13 +1,22 @@
 <template>
   <div>
     <h1>Bourbon Calculator <span style="color: red" v-show="promo">2x1</span></h1>
+    Total: {{ total | currency }}
+    <br>
     <button @click="promoOff">{{buttonText}}</button>
     <br>
-    <router-link to="/new">New</router-link>
+    <router-link to="/new">Add Customer</router-link>
+    -
+    <router-link to="/newGroup">Group</router-link>
     <ul v-for="customer in customers">
-      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{customer.total | promoFilter(promo) | currency}}</router-link></li>
+      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{totalIndividual(customer) | currency}}</router-link></li>
     </ul>
-    Total: {{ total | currency }}
+
+    <hr>
+
+    <ul v-for="group in groups">
+      <li><router-link :to="'/group/'+group.id">{{group.name}} - {{group.price | currency}}</router-link></li>
+    </ul>
   </div>
 </template>
 
@@ -22,7 +31,8 @@ export default {
     ...mapGetters({
       customers: 'getCustomers',
       promo: 'getPromo',
-      total: 'getTotal'
+      total: 'getTotal',
+      groups: 'getGroups'
     }),
 
     buttonText: function () {
@@ -33,18 +43,28 @@ export default {
   methods: {
     ...mapActions({
       promoOff: 'togglePromo'
-    })
-  },
+    }),
 
-  filters: {
-    promoFilter: function (value, promo) {
-      var total = value
-      if (promo) {
-        total = value / 2
+    isInGroup: function (customer, groupId) {
+
+      this.group.customers.find(c => c.id === customer.id)
+    },
+
+    totalIndividual: function (customer) {
+      var total = customer.total
+
+      if (this.promo) {
+        total = total / 2
       }
+
+      this.groups.forEach(group => {
+        if (group.customers.find(id => id === customer.id)) {
+          total += group.individual
+        }
+      })
 
       return total
     }
-  }
+  },
 }
 </script>

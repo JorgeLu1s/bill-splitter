@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     customers: [],
+    groups: [],
     promo: true
   },
 
@@ -14,8 +15,16 @@ export default new Vuex.Store({
       return state.customers
     },
 
+    getGroups (state) {
+      return state.groups
+    },
+
     getCustomerById: (state) => (id) => {
       return state.customers.find(customer => customer.id === id)
+    },
+
+    getGroupById: (state) => (id) => {
+      return state.groups.find(group => group.id === id)
     },
 
     getPromo (state) {
@@ -42,8 +51,22 @@ export default new Vuex.Store({
       commit('pushCustomer', customer)
     },
 
+    addGroup ({commit}, group) {
+      commit('pushGroup', group)
+    },
+
     togglePromo ({commit}) {
       commit('togglePromo')
+    },
+
+    updateGroupCustomers ({commit, getters}, {groupId, customers}) {
+      var group = getters.getGroupById(groupId)
+      group.customers = customers
+      if (group.customers.length > 0) {
+        group.individual = group.price / group.customers.length
+      } else {
+        group.individual = 0
+      }
     }
   },
 
@@ -52,8 +75,12 @@ export default new Vuex.Store({
       state.customers.push(customer)
     },
 
+    pushGroup (state, group) {
+      state.groups.push(group)
+    },
+
     togglePromo (state) {
       state.promo = !state.promo
-    }
+    },
   }
 })

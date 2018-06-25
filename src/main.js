@@ -5,9 +5,13 @@ import App from './App'
 import router from './router'
 import store from '@/store/index'
 import {currency} from '@/currency'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
 Vue.filter('currency', currency)
+Vue.use(Vuetify)
 
 /* eslint-disable no-new */
 new Vue({

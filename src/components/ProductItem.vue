@@ -1,8 +1,15 @@
 <template>
   <div>
-    <input v-model="product.name">
-    <input type="number" v-model="product.price">
-    <button @click="remove">Remove</button>
+    <v-card>
+      <v-container>
+        <v-form color="red">
+          <v-text-field v-model="product.name" label="Name"></v-text-field>
+          <v-text-field v-model="product.price" label="Price"></v-text-field>
+          <v-btn small color="error" @click="remove"><v-icon>clear</v-icon></v-btn>
+        </v-form>
+      </v-container>
+    </v-card>
+    <br>
   </div>
 </template>
 

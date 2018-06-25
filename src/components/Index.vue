@@ -1,74 +1,83 @@
 <template>
   <div>
-    <h1>Bourbon Calculator <span style="color: red" v-show="promo">2x1</span></h1>
-    Total: {{ total | currency }} <br>
-    Tip: {{ tip | currency }} <br>
-    Total + Tip: {{ totalTip | currency }} <br>
-    <br>
-    <button @click="promoOff">{{buttonText}}</button>
-    <br>
-    <router-link to="/new">Add Customer</router-link>
-    -
-    <router-link to="/newGroup">Group</router-link>
-    <ul v-for="customer in customers">
-      <li><router-link :to="'/customer/'+customer.id">{{customer.name}} - {{totalIndividual(customer) | currency}}</router-link></li>
-    </ul>
+    <v-layout row wrap justify-space-between>
+      <v-flex xs2>
+        <h1 style="color: red" v-show="promo">2x1</h1>
+      </v-flex>
+    </v-layout>
 
-    <hr>
+    <v-switch :label="promoText" v-model="promo"></v-switch>
+    <v-layout row justify-space-between>
+      <v-flex xs12>
+    <v-card>
+      <v-container fluid grid-list-md>
+        <v-list dense>
+          <v-list-tile>
+            <v-list-tile-content class="title">Total:</v-list-tile-content>
+            <v-list-tile-content class="align-end title">{{ total | currency }}</v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-content class="title">Tip:</v-list-tile-content>
+            <v-list-tile-content class="align-end title">{{ tip | currency }}</v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-content class="title">Total + Tip:</v-list-tile-content>
+            <v-list-tile-content class="align-end title">{{ totalTip | currency }}</v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-container>
+    </v-card>
+      </v-flex>
+    </v-layout>
 
-    <ul v-for="group in groups">
-      <li><router-link :to="'/group/'+group.id">{{group.name}} - {{group.price | currency}}</router-link></li>
-    </ul>
+    <br>
+
+    <ArrayList :items="customers" title="Customers" route="customer"></ArrayList>
+    <ArrayList :items="groups" title="Groups" route="group"></ArrayList>
   </div>
 </template>
 
 <script>
 import Customer from '@/components/Customer'
-import {mapGetters, mapActions} from 'vuex'
+import ArrayList from '@/components/ArrayList'
+import BottomNav from '@/components/BottomNav'
+import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Index',
-  components: { Customer },
+  components: { Customer, ArrayList, BottomNav },
   computed: {
     ...mapGetters({
       customers: 'getCustomers',
-      promo: 'getPromo',
       total: 'getTotal',
       groups: 'getGroups',
       tip: 'getTip',
       totalTip: 'getTotalAndTip'
     }),
 
-    buttonText: function () {
-      return this.promo === true ? 'Promo Off' : 'Promo On'
+    promoText: function () {
+      return this.promo === true ? 'Turn promo off' : 'Turn promo on'
     },
+
+    promo: {
+      get () {
+        return this.$store.getters.getPromo
+      },
+      set (value) {
+        this.$store.commit('togglePromo', value)
+      }
+    }
   },
 
   methods: {
     ...mapActions({
-      promoOff: 'togglePromo'
+      togglePromo: 'togglePromo'
     }),
 
     isInGroup: function (customer, groupId) {
 
       this.group.customers.find(c => c.id === customer.id)
     },
-
-    totalIndividual: function (customer) {
-      var total = customer.total
-
-      if (this.promo) {
-        total = total / 2
-      }
-
-      this.groups.forEach(group => {
-        if (group.customers.find(id => id === customer.id)) {
-          total += group.individual
-        }
-      })
-
-      return total + ((total * 10)/ 100)
-    }
   },
 }
 </script>

@@ -1,22 +1,28 @@
 <template>
   <div>
-    <h1>{{ customer.name }}</h1>
-    <input v-model="customer.name">
+    <h1>{{ customer.name }} - {{ total | currency }}</h1>
+    <v-text-field v-model="customer.name" label="Name"></v-text-field>
     <br>
     <div v-for="(product, index) in customer.products">
       <ProductItem :product="product" :index="index" v-on:remove-product="removeProduct"></ProductItem>
     </div>
-    <button @click="addProduct">Add</button>
     <br>
-    Total: {{ total | currency }}
-    <br>
-    <ul>
-      <li v-for="group in groups" v-if="isInGroup(group)">
-        {{ group.name }} - {{ group.individual | currency }}
-      </li>
-    </ul>
-    <button @click="save">Save</button>
-    <router-link to="/">Cancel</router-link>
+    <v-btn color="primary" @click="addProduct">Add product</v-btn>
+
+    <v-list>
+      <v-subheader>Groups</v-subheader>
+      <v-list-tile v-for="group in groups" v-if="isInGroup(group)">
+        <v-list-tile-content>
+          {{ group.name }} - {{ group.individual | currency }}
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile v-else>
+        empty
+      </v-list-tile>
+    </v-list>
+
+    <v-btn color="success" @click="save">Save</v-btn>
+    <v-btn color="error" to="/">Cancel</v-btn>
   </div>
 </template>
 

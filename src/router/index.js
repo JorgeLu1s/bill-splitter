@@ -10,7 +10,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
+      name: 'index',
       component: Index
     },
     {
@@ -20,13 +20,13 @@ export default new Router({
     },
     {
       path: '/customer/:id',
-      name: 'Customer',
+      name: 'customer',
       component: Customer,
       props: true
     },
     {
       path: '/group/:id',
-      name: 'Group',
+      name: 'group',
       component: Group,
       props: true
     },

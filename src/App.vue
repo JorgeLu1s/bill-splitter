@@ -1,22 +1,24 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <v-app id="app" text-center dark>
+    <v-toolbar>
+      <v-toolbar-title>Bourbon Calculator</v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+    <v-footer>
+      <BottomNav></BottomNav>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
+import BottomNav from '@/components/BottomNav'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { BottomNav }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

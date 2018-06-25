@@ -1,20 +1,22 @@
 <template>
   <div>
     <h1>{{ group.name }} - {{ group.price | currency }}</h1>
-    <input v-model="group.name">
-    <input v-model="group.price">
+    <v-text-field v-model="group.name" label="Name"></v-text-field>
+    <v-text-field v-model="group.price" label="Price"></v-text-field>
     <br>
-    <ul>
-      <li v-for="customer in customers">
-        <label>
-        <input type="checkbox" v-model="selected" :id="customer.id" :value="customer.id">
-        {{ customer.name }}
-        </label>
-      </li>
-    </ul>
+
+    <v-list>
+      <v-subheader>Customers</v-subheader>
+      <v-list-tile v-for="customer in customers">
+        <v-list-tile-content>
+          <v-checkbox :label="customer.name" type="checkbox" v-model="selected" :id="customer.id" :value="customer.id"></v-checkbox>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+
     <br>
-    <button @click="save">Save</button>
-    <router-link to="/">Index</router-link>
+    <v-btn color="success" @click="save">Save</v-btn>
+    <v-btn color="error" to="/">Cancel</v-btn>
   </div>
 </template>
 

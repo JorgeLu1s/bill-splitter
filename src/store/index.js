@@ -42,6 +42,10 @@ export default new Vuex.Store({
         total = total / 2
       }
 
+      state.groups.forEach(group => {
+        total += parseInt(group.price)
+      })
+
       return total
     },
 

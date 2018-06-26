@@ -2,7 +2,7 @@
   <div>
     <v-layout row wrap justify-space-between>
       <v-flex xs2>
-        <h1 style="color: red" v-show="promo">2x1</h1>
+        <h1 style="color: red" v-show="promo">2&times;1</h1>
       </v-flex>
     </v-layout>
 
@@ -15,10 +15,6 @@
           <v-list-tile>
             <v-list-tile-content class="title">Total:</v-list-tile-content>
             <v-list-tile-content class="align-end title">{{ total | currency }}</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content class="title">Tip:</v-list-tile-content>
-            <v-list-tile-content class="align-end title">{{ tip | currency }}</v-list-tile-content>
           </v-list-tile>
           <v-list-tile>
             <v-list-tile-content class="title">Total + Tip:</v-list-tile-content>

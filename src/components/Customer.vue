@@ -6,12 +6,13 @@
     <div v-for="(product, index) in customer.products">
       <ProductItem :product="product" :index="index" v-on:remove-product="removeProduct"></ProductItem>
     </div>
+    <v-btn block color="primary" @click="addProduct">Add product</v-btn>
+
     <br>
-    <v-btn color="primary" @click="addProduct">Add product</v-btn>
 
     <v-list>
       <v-subheader>Groups</v-subheader>
-      <v-list-tile v-for="group in groups" v-if="isInGroup(group)">
+      <v-list-tile v-for="group in groups" v-if="isInGroup(group)" :key="group.id">
         <v-list-tile-content>
           {{ group.name }} - {{ group.individual | currency }}
         </v-list-tile-content>
@@ -21,8 +22,16 @@
       </v-list-tile>
     </v-list>
 
-    <v-btn color="success" @click="save">Save</v-btn>
-    <v-btn color="error" to="/">Cancel</v-btn>
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex xs6>
+          <v-btn block color="success" @click="save">Save</v-btn>
+        </v-flex>
+        <v-flex xs6>
+          <v-btn block color="error" to="/">Cancel</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -75,7 +84,7 @@ export default {
     },
 
     addProduct: function () {
-      this.customer.products.push({id: Date.now(), name: '', price: 0})
+      this.customer.products.push({id: Date.now(), name: '', price: null})
     },
 
     removeProduct: function (index) {

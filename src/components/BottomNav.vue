@@ -10,7 +10,7 @@
     </v-btn>
     <v-btn flat color="blue" value="groups" to="/newGroup">
       <span>Add group</span>
-      <v-icon>people</v-icon>
+      <v-icon>group</v-icon>
     </v-btn>
   </v-bottom-nav>
 </template>

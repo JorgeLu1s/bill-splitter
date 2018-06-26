@@ -4,8 +4,8 @@
       <v-container>
         <v-form color="red">
           <v-text-field v-model="product.name" label="Name"></v-text-field>
-          <v-text-field v-model="product.price" label="Price"></v-text-field>
-          <v-btn small color="error" @click="remove"><v-icon>clear</v-icon></v-btn>
+          <v-text-field v-model="product.price" label="Price" type="number" pattern="\d*"></v-text-field>
+          <v-btn block color="error" @click="remove"><v-icon>clear</v-icon></v-btn>
         </v-form>
       </v-container>
     </v-card>

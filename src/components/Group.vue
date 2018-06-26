@@ -2,12 +2,12 @@
   <div>
     <h1>{{ group.name }} - {{ group.price | currency }}</h1>
     <v-text-field v-model="group.name" label="Name"></v-text-field>
-    <v-text-field v-model="group.price" label="Price"></v-text-field>
+    <v-text-field v-model="group.price" label="Price" type="number" pattern="\d*"></v-text-field>
     <br>
 
     <v-list>
       <v-subheader>Customers</v-subheader>
-      <v-list-tile v-for="customer in customers">
+      <v-list-tile v-for="customer in customers" :key="customer.id">
         <v-list-tile-content>
           <v-checkbox :label="customer.name" type="checkbox" v-model="selected" :id="customer.id" :value="customer.id"></v-checkbox>
         </v-list-tile-content>
@@ -15,8 +15,17 @@
     </v-list>
 
     <br>
-    <v-btn color="success" @click="save">Save</v-btn>
-    <v-btn color="error" to="/">Cancel</v-btn>
+
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex xs6>
+          <v-btn block color="success" @click="save">Save</v-btn>
+        </v-flex>
+        <v-flex xs6>
+          <v-btn block color="error" to="/">Cancel</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -59,7 +68,7 @@ export default {
 
   mounted: function () {
     if (typeof this.id === 'undefined') {
-      this.group = { id: Date.now(), name: '', price: 0, individual: 0, customers: [] }
+      this.group = { id: Date.now(), name: '', price: null, individual: 0, customers: [] }
     } else {
       this.group = this.$store.getters.getGroupById(parseInt(this.id))
       this.selected = this.group.customers

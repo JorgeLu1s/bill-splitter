@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{ customer.name }} - {{ total | currency }}</h1>
+    <h1>{{ customer.name }}</h1>
+    <h2>{{ total | currency }} - {{ total | tip | currency }}</h2>
     <v-text-field v-model="customer.name" label="Name"></v-text-field>
     <br>
     <div v-for="(product, index) in customer.products">

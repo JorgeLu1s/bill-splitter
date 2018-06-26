@@ -13,6 +13,10 @@ Vue.config.productionTip = false
 Vue.filter('currency', currency)
 Vue.use(Vuetify)
 
+Vue.filter('tip', function (value) {
+  return value + ((value) * 10 / 100)
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

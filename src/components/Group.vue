@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{ group.name }} - {{ group.price | currency }}</h1>
+    <h1>{{ group.name }}</h1>
+    <h2>{{ group.price | currency }}</h2>
     <v-text-field v-model="group.name" label="Name"></v-text-field>
     <v-text-field v-model="group.price" label="Price" type="number" pattern="\d*"></v-text-field>
     <br>

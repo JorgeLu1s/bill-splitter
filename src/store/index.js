@@ -55,7 +55,7 @@ export default new Vuex.Store({
 
     getTotalAndTip (state, getters) {
       return getters.getTotal + getters.getTip
-    }
+    },
   },
 
   actions: {
@@ -79,6 +79,14 @@ export default new Vuex.Store({
       } else {
         group.individual = 0
       }
+    },
+
+    removeCustomer ({commit}, index) {
+      commit('removeCustomer', index)
+    },
+
+    resetData ({commit}) {
+      commit('resetData')
     }
   },
 
@@ -94,5 +102,14 @@ export default new Vuex.Store({
     togglePromo (state) {
       state.promo = !state.promo
     },
+
+    removeCustomer (state, index) {
+      state.customers.slice(index, 1)
+    },
+
+    resetData (state) {
+      state.customers = []
+      state.groups = []
+    }
   }
 })

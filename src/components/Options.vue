@@ -4,8 +4,11 @@
       <v-icon>more_vert</v-icon>
     </v-btn>
     <v-list>
-      <v-list-tile @click="reset">
-        <v-list-tile-title>{{ text }}</v-list-tile-title>
+      <v-list-tile v-if="global" @click="reset">
+        <v-list-tile-title>Reset</v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile v-else @click="remove">
+        <v-list-tile-title>Delete</v-list-tile-title>
       </v-list-tile>
     </v-list>
   </v-menu>
@@ -21,10 +24,38 @@ export default {
       text: 'Reset'
     }
   },
+  computed: {
+    global: function () {
+      if (this.$route.name === 'index') {
+        return true
+      }
+
+      return false
+    }
+  },
   methods: {
     ...mapActions({
       reset: 'resetData'
-    })
+    }),
+
+    reset: function () {
+      this.$store.dispatch('resetData')
+    },
+
+    remove: function () {
+      switch (this.$route.name) {
+        case 'newCustomer':
+        case 'customer':
+          this.$store.dispatch('removeCustomer', this.$route.params.id)
+          this.$router.push('/')
+          break;
+        case 'newGroup':
+        case 'group':
+          this.$store.dispatch('removeGroup', this.$route.params.id)
+          this.$router.push('/')
+          break;
+      }
+    }
   }
 }
 </script>

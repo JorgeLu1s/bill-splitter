@@ -74,6 +74,7 @@ export default new Vuex.Store({
     updateGroupCustomers ({commit, getters}, {groupId, customers}) {
       var group = getters.getGroupById(groupId)
       group.customers = customers
+
       if (group.customers.length > 0) {
         group.individual = group.price / group.customers.length
       } else {
@@ -81,12 +82,16 @@ export default new Vuex.Store({
       }
     },
 
-    removeCustomer ({commit}, index) {
-      commit('removeCustomer', index)
+    removeCustomer ({commit}, customerId) {
+      commit('removeCustomer', customerId)
     },
 
     resetData ({commit}) {
       commit('resetData')
+    },
+
+    removeGroup ({commit}, groupId) {
+      commit('removeGroup', groupId)
     }
   },
 
@@ -103,13 +108,17 @@ export default new Vuex.Store({
       state.promo = !state.promo
     },
 
-    removeCustomer (state, index) {
-      state.customers.slice(index, 1)
+    removeCustomer (state, customerId) {
+      state.customers = state.customers.filter(c => c.id !== customerId)
     },
 
     resetData (state) {
       state.customers = []
       state.groups = []
+    },
+
+    removeGroup (state, groupId) {
+      state.groups = state.groups.filter(group => group.id !== groupId)
     }
   }
 })
